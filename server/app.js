@@ -6,9 +6,10 @@ import logger from "morgan";
 import mongoose from "mongoose";
 import SourceMapSupport from "source-map-support";
 import bb from "express-busboy";
+import Rx from "rxjs";
+import { map } from "rxjs/operators";
 
 // importing ReactiveX
-import Rx from "rxjs";
 import { Subject } from "rxjs/Subject";
 
 var requests_ = new Subject();
@@ -64,7 +65,14 @@ SourceMapSupport.install();
 app.use("/api", todoRoutes);
 
 app.get("/", (req, res) => {
-  return res.end("Api working");
+  return res.end("Api working").pipe(
+    map(res => {
+      if (res) {
+        return true;
+      }
+      return false;
+    })
+  );
 });
 
 // catch 404
@@ -76,3 +84,12 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   console.log(`App Server Listening at ${port}`);
 });
+
+// .pipe(
+//   map(res => {
+//     if (res) {
+//       return true;
+//     }
+//     return false;
+//   })
+// );
