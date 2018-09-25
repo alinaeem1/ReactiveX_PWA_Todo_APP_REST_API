@@ -32,5 +32,8 @@
     "morgan": "^1.8.2",
     "rxjs": "^6.3.2",
     "source-map-support": "^0.4.16"
+  },
+  "devDependencies": {
+    "rxjs-compat": "^6.3.2"
   }
 }
