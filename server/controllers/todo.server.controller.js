@@ -4,6 +4,12 @@ import { map } from "rxjs/operators";
 
 //import models
 import Todo from "../models/todo.server.model";
+// .pipe(map(res => {
+//   if (res) {
+//     return true;
+//   }
+//   return false;
+// }));
 
 export const getTodos = (req, res) => {
   Todo.find().exec((err, todos) => {
@@ -11,20 +17,11 @@ export const getTodos = (req, res) => {
       return res.json({ success: false, message: "Some Error" });
     }
 
-    return res
-      .json({
-        success: true,
-        message: "Todos fetched successfully",
-        todos
-      })
-      .pipe(
-        map(res => {
-          if (res) {
-            return true;
-          }
-          return false;
-        })
-      );
+    return res.json({
+      success: true,
+      message: "Todos fetched successfully",
+      todos
+    });
   });
 };
 
@@ -36,20 +33,11 @@ export const addTodo = (req, res) => {
       return res.json({ success: false, message: "Some Error" });
     }
 
-    return res
-      .json({
-        success: true,
-        message: "Todo added successfully",
-        todo
-      })
-      .pipe(
-        map(res => {
-          if (res) {
-            return true;
-          }
-          return false;
-        })
-      );
+    return res.json({
+      success: true,
+      message: "Todo added successfully",
+      todo
+    });
   });
 };
 
@@ -60,28 +48,10 @@ export const updateTodo = (req, res) => {
     { new: true },
     (err, todo) => {
       if (err) {
-        return res
-          .json({ success: false, message: "Some Error", error: err })
-          .pipe(
-            map(res => {
-              if (res) {
-                return true;
-              }
-              return false;
-            })
-          );
+        return res.json({ success: false, message: "Some Error", error: err });
       }
       console.log(todo);
-      return res
-        .json({ success: true, message: "Updated successfully", todo })
-        .pipe(
-          map(res => {
-            if (res) {
-              return true;
-            }
-            return false;
-          })
-        );
+      return res.json({ success: true, message: "Updated successfully", todo });
     }
   );
 };
@@ -92,34 +62,16 @@ export const getTodo = (req, res) => {
       return res.json({ success: false, message: "Some Error" });
     }
     if (todo.length) {
-      return res
-        .json({
-          success: true,
-          message: "Todo fetched by id successfully",
-          todo
-        })
-        .pipe(
-          map(res => {
-            if (res) {
-              return true;
-            }
-            return false;
-          })
-        );
+      return res.json({
+        success: true,
+        message: "Todo fetched by id successfully",
+        todo
+      });
     } else {
-      return res
-        .json({
-          success: false,
-          message: "Todo with the given id not found"
-        })
-        .pipe(
-          map(res => {
-            if (res) {
-              return true;
-            }
-            return false;
-          })
-        );
+      return res.json({
+        success: false,
+        message: "Todo with the given id not found"
+      });
     }
   });
 };
@@ -130,18 +82,9 @@ export const deleteTodo = (req, res) => {
       return res.json({ success: false, message: "Some Error" });
     }
 
-    return res
-      .json({
-        success: true,
-        message: todo.todoText + " deleted successfully"
-      })
-      .pipe(
-        map(res => {
-          if (res) {
-            return true;
-          }
-          return false;
-        })
-      );
+    return res.json({
+      success: true,
+      message: todo.todoText + " deleted successfully"
+    });
   });
 };
